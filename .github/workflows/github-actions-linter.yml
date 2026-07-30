@@ -1,0 +1,31 @@
+name: Scan for GitHub Actions issues
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.repository }}-${{ github.ref }}
+
+permissions: {}
+
+jobs:
+  main:
+    name: Scan repository contents
+    runs-on: cx-public-ubuntu-x64
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run Zizmor linter
+        uses: step-security/zizmor-action@e4ba943ab717e2dc71e7276b8649f48fb7f2519d # v0.5.7
+        with:
+          advanced-security: false
+          annotations: false
+          persona: pedantic
+          fail-on-no-inputs: false
+          # TODO: Zizmor needs a token so it can read actions from other internal repos.
+          online-audits: false
