@@ -1,0 +1,20 @@
+name: Test - Scan for GitHub Actions issues
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/github-actions-linter.yml'
+      - '.github/workflows/github-actions-linter-test.yml'
+
+concurrency:
+  group: github-actions-linter-test-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  run:
+    name: Run
+    permissions:
+      contents: read
+    uses: ./.github/workflows/github-actions-linter.yml
