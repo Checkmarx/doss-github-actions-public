@@ -2,9 +2,10 @@ name: Scan for GitHub Actions issues
 
 on:
   pull_request:
+  workflow_call:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.repository }}-${{ github.ref }}
+  group: github-actions-linter-${{ github.event.pull_request.number }}${{ github.event_name == 'workflow_call' && '-test' }}
 
 permissions: {}
 
@@ -21,7 +22,7 @@ jobs:
           persist-credentials: false
 
       - name: Run Zizmor linter
-        uses: step-security/zizmor-action@e4ba943ab717e2dc71e7276b8649f48fb7f2519d # v0.5.7
+        uses: step-security/zizmor-action@6dc1b15aa3aca5de1faf70db0f8214e26c5ebbe9 # v0.6.2
         with:
           advanced-security: false
           annotations: false
