@@ -1,0 +1,40 @@
+name: Checkmarx One Scan
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '00 7 * * *' # Every day at 07:00
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  cx-scan:
+    name: Checkmarx One Scan
+    runs-on: cx-public-ubuntu-x64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v6
+        with:
+          persist-credentials: false
+
+      - name: Checkmarx One CLI Action
+        uses: checkmarx/ast-github-action@7b6a5cee621f92e6819d366dd48c9431314ac600 # 2.3.42
+        with:
+          base_uri: ${{ secrets.AST_RND_SCANS_BASE_URI }}
+          cx_tenant: ${{ secrets.AST_RND_SCANS_TENANT }}
+          cx_client_id: ${{ secrets.AST_RND_SCANS_CLIENT_ID }}
+          cx_client_secret: ${{ secrets.AST_RND_SCANS_CLIENT_SECRET }}
+          additional_params: >-
+            --scan-timeout 60
+            --scan-types sast,sca,iac-security,api-security,containers,scs
+            --scs-engines secret-detection
+            --threshold "sca-critical=1;sca-high=1;sca-medium=1;sca-low=1;sast-critical=1;sast-high=1;sast-medium=1;sast-low=1;iac-security-critical=1;iac-security-high=1;iac-security-medium=1;iac-security-low=1;api-security-critical=1;api-security-high=1;api-security-medium=1;api-security-low=1;containers-critical=1;containers-high=1;containers-medium=1;containers-low=1;sscs-secret-detection-critical=1;sscs-secret-detection-high=1;sscs-secret-detection-medium=1;sscs-secret-detection-low=1"
