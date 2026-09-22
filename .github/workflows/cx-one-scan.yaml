@@ -35,6 +35,6 @@ jobs:
           cx_client_secret: ${{ secrets.AST_RND_SCANS_CLIENT_SECRET }}
           additional_params: >-
             --scan-timeout 60
-            --scan-types sast,sca,iac-security,api-security,containers,scs,asca
+            --scan-types sast,sca,iac-security,api-security,containers,scs,aisc
             --scs-engines secret-detection
             --threshold "sca-critical=1;sca-high=1;sca-medium=1;sca-low=1;sast-critical=1;sast-high=1;sast-medium=1;sast-low=1;iac-security-critical=1;iac-security-high=1;iac-security-medium=1;iac-security-low=1;api-security-critical=1;api-security-high=1;api-security-medium=1;api-security-low=1;containers-critical=1;containers-high=1;containers-medium=1;containers-low=1;sscs-secret-detection-critical=1;sscs-secret-detection-high=1;sscs-secret-detection-medium=1;sscs-secret-detection-low=1"
