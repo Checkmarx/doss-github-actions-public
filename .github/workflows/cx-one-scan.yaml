@@ -9,6 +9,16 @@ on:
       - master
   schedule:
     - cron: '00 7 * * *' # Every day at 07:00
+  workflow_call:
+    secrets:
+      AST_RND_SCANS_BASE_URI:
+        required: true
+      AST_RND_SCANS_TENANT:
+        required: true
+      AST_RND_SCANS_CLIENT_ID:
+        required: true
+      AST_RND_SCANS_CLIENT_SECRET:
+        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
