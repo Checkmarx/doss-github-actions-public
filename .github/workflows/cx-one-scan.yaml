@@ -1,5 +1,7 @@
 name: Checkmarx One Scan
 
+# Testing the ruleset policy
+
 on:
   workflow_dispatch:
   pull_request:
