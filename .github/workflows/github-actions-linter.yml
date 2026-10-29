@@ -12,7 +12,7 @@ permissions: {}
 jobs:
   main:
     name: Scan repository contents
-    runs-on: cx-public-ubuntu-x64
+    runs-on: cx-public-ubuntu-arm64
     permissions:
       contents: read
     steps:
@@ -22,7 +22,7 @@ jobs:
           persist-credentials: false
 
       - name: Run Zizmor linter
-        uses: step-security/zizmor-action@6dc1b15aa3aca5de1faf70db0f8214e26c5ebbe9 # v0.6.2
+        uses: step-security/zizmor-action@0d7097f162a7f6dd65730d10bbcd17f070cf87e2 # v0.6.4
         with:
           advanced-security: false
           annotations: false
