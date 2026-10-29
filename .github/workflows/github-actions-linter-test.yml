@@ -17,4 +17,4 @@ jobs:
     name: Run
     permissions:
       contents: read
-    uses: ./.github/workflows/github-actions-linter.yml
+    uses: $/.github/workflows/github-actions-linter.yml
